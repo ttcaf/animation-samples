@@ -1,0 +1,29 @@
+{
+  "name": "animation-samples",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ttcaf/animation-samples.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "engines": {
+    "node": "24.6.0",
+    "npm": "11.5.1"
+  },
+  "volta": {
+    "node": "24.6.0",
+    "npm": "11.5.1"
+  },
+  "bugs": {
+    "url": "https://github.com/ttcaf/animation-samples/issues"
+  },
+  "homepage": "https://github.com/ttcaf/animation-samples#readme"
+}
