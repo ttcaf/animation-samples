@@ -12,6 +12,7 @@ export default function ScrollCardCarousel() {
   const { contextSafe } = useGSAP({scope: containerRef});
   const cards = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLDivElement>(null);
+  const pinRef = useRef<HTMLDivElement>(null);
   let currentIndex = 0;
 
   useGSAP(() => {
@@ -21,9 +22,23 @@ export default function ScrollCardCarousel() {
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: containerRef.current,
-        pin: true,
         start: 'top top',
         end: 'bottom bottom',
+        // toggleClass: {
+        //   targets: pinRef.current,
+        //   className: 'fixed top-0 left-0',
+        // },
+        onEnter: () => {
+          pinRef.current?.classList.add('fixed', 'top-0', 'left-0');
+        },
+        onLeave: () => {
+          pinRef.current?.classList.remove('fixed', 'top-0', 'left-0');
+          pinRef.current?.classList.add('top-auto','bottom-0', 'left-0');
+        },
+        onEnterBack: () => {
+          pinRef.current?.classList.add('fixed', 'top-0', 'left-0');
+          pinRef.current?.classList.remove('top-auto','bottom-0', 'left-0');
+        },
       }
     })
     const triggers =  gsap.utils.toArray(triggerRef.current?.querySelectorAll('div') || []);
@@ -80,18 +95,18 @@ export default function ScrollCardCarousel() {
   return (
     <div className="bg-black font-sans w-full overflow-x-hidden">
       <div ref={containerRef} className="hoge">
-        <section className="w-full">
-          <div className="w-full h-screen relative">
+        <section className="w-full relative">
+          <div ref={pinRef} className="w-full h-screen absolute top-0 left-0">
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[320px]">
-              <div ref={cards} className="origin-[50%_1250%]">
+              <div ref={cards} className="origin-[50%_1250%] relative">
                 <div className="bg-white w-[320px] h-[560px] relative"></div>              
                 <div className="bg-yellow-500 w-[320px] h-[560px] absolute top-0 left-0 rotate-[3deg] origin-[50%_1250%]"></div>
                 <div className="bg-blue-500 w-[320px] h-[560px] absolute top-0 left-0 rotate-[6deg] origin-[50%_1250%]"></div>
                 <div className="bg-green-500 w-[320px] h-[560px] absolute top-0 left-0 rotate-[9deg] origin-[50%_1250%]"></div>
                 <div className="bg-purple-500 w-[320px] h-[560px] absolute top-0 left-0 rotate-[12deg] origin-[50%_1250%]"></div>
               </div>
-              <button type="button" onClick={handlePrev} className='text-white w-[80px] h-[80px] bg-sky-500 flex items-center justify-center rounded-full absolute top-1/2 -translate-y-1/2 -left-1/2'>Prev</button>
-              <button type="button" onClick={handleNext} className='text-white w-[80px] h-[80px] bg-sky-500 flex items-center justify-center rounded-full absolute top-1/2 -translate-y-1/2 -right-1/2'>Next</button>
+              <button type="button" onClick={handlePrev} className='text-white w-[80px] h-[80px] bg-sky-500 flex items-center justify-center rounded-full absolute top-1/2 -translate-y-1/2 -left-1/2 cursor-pointer'>Prev</button>
+              <button type="button" onClick={handleNext} className='text-white w-[80px] h-[80px] bg-sky-500 flex items-center justify-center rounded-full absolute top-1/2 -translate-y-1/2 -right-1/2 cursor-pointer'>Next</button>
             </div>
           </div>
           <div ref={triggerRef}>
@@ -103,6 +118,7 @@ export default function ScrollCardCarousel() {
           </div>
         </section>
       </div>
+      <div className="h-[400vh] bg-red-500"></div>
     </div>
   );
 }
